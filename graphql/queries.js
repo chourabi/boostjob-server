@@ -72,4 +72,21 @@ const comment = {
   },
 }
 
-module.exports = { users, user, posts, post, comments, comment, myPosts }
+const myOffres = {
+  type: new GraphQLList(CommentType),
+  description: "Retrieves list of offres",
+  
+  resolve(parent, args, { verifiedUser }) {
+    console.log("Verified User: ", verifiedUser)
+    if (!verifiedUser) {
+      throw new Error("Unauthorized")
+    }
+
+    return Comment.find({userId:verifiedUser._id})
+  },
+}
+
+
+
+
+module.exports = { users, user, posts, post, comments, comment, myPosts, myOffres }

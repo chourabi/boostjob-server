@@ -17,6 +17,8 @@ const UserType = new GraphQLObjectType({
     email: { type: GraphQLString },
     displayName: { type: GraphQLString },
     userType: { type: GraphQLString },
+    address: { type: GraphQLString },
+ 
     
   }),
 })
@@ -34,6 +36,8 @@ const PostType = new GraphQLObjectType({
     type: { type: GraphQLString },
     salary: { type: GraphQLString },
     date_time: { type: GraphQLString },
+
+    category: { type: GraphQLString },
     
     
     

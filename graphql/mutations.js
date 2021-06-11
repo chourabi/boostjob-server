@@ -14,11 +14,13 @@ const register = {
     password: { type: GraphQLString },
     displayName: { type: GraphQLString },
     userType: { type: GraphQLString },
+    address: { type: GraphQLString },
+    
     
   },
   async resolve(parent, args) {
-    const { username, email, password, displayName, userType } = args
-    const user = new User({ username, email, password, displayName , userType})
+    const { username, email, password, displayName, userType, address } = args
+    const user = new User({ username, email, password, displayName , userType , address})
 
     await user.save()
     const token = createJwtToken(user)
@@ -74,6 +76,7 @@ const addPost = {
     type: { type: GraphQLString },
     salary: { type: GraphQLString },
     date_time: { type: GraphQLString },
+    category: { type: GraphQLString },
     
   },
   resolve(parent, args, { verifiedUser }) {
@@ -91,8 +94,8 @@ const addPost = {
       experience: args.experience,
       type: args.type,
       salary: args.salary,
-      date_time:args.date_time
-      
+      date_time:args.date_time,
+      category:args.category
     })
 
     return post.save()
@@ -156,16 +159,16 @@ const deletePost = {
 
 const addComment = {
   type: CommentType,
-  description: "Create a new comment on the blog post",
+  description: "Create a new job offre condidature",
   args: {
-    comment: { type: GraphQLString },
+    
     postId: { type: GraphQLString },
   },
   resolve(parent, args, { verifiedUser }) {
     const comment = new Comment({
       userId: verifiedUser._id,
       postId: args.postId,
-      comment: args.comment,
+      status: 0
     })
     return comment.save()
   },

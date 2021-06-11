@@ -2,7 +2,7 @@
 const { GraphQLSchema, GraphQLObjectType } = require("graphql")
 
 // Import queries
-const { users, user, posts, post, comments, comment , myPosts } = require("./queries")
+const { users, user, posts, post, comments, comment , myPosts, myOffres } = require("./queries")
 
 // Import mutations
 const {
@@ -14,14 +14,14 @@ const {
   deletePost,
   updateComment,
   deleteComment,
-  myInfo
+  myInfo,
 } = require("./mutations")
 
 // Define QueryType
 const QueryType = new GraphQLObjectType({
   name: "QueryType",
   description: "Queries",
-  fields: { users, user, posts, post, comments, comment, myPosts },
+  fields: { users, user, posts, post, comments, comment, myPosts, myOffres },
 })
 
 // Define MutationType
