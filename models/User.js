@@ -31,7 +31,12 @@ const userSchema = new mongoose.Schema(
     address: {
       type: String,
       required: true,
-    }
+    },
+    cv: {
+      type: String,
+      required: false,
+    },
+    
 
   },
   { timestamps: true }

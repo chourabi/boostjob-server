@@ -217,14 +217,74 @@ const deleteComment = {
       throw new Error("Unauthenticated")
     }
     const commentDeleted = await Comment.findOneAndDelete({
-      _id: args.commentId,
-      userId: verifiedUser._id,
+      _id: args.commentId
     })
     if (!commentDeleted) {
       throw new Error("No post with the given ID found for the author")
     }
 
     return "Post deleted"
+  },
+}
+
+const updateCondidature = {
+  type: GraphQLString,
+  description: "update condidature",
+  args: {
+    status: { type: GraphQLInt },
+    commentId: { type: GraphQLString }
+  },
+  async resolve(parent, args, { verifiedUser }) {
+    console.log(verifiedUser)
+    if (!verifiedUser) {
+      throw new Error("Unauthenticated")
+    }
+    const commentDeleted = await Comment.findOneAndUpdate(
+      {
+        _id: args.commentId
+      },
+      { status: args.status },
+      {
+        new: true,
+        runValidators: true,
+      }
+    
+    )
+    if (!commentDeleted) {
+      throw new Error("No post with the given ID found for the author")
+    }
+
+    return "Post deleted"
+  },
+}
+
+
+const updateProfileCV = {
+  type: UserType,
+  description: "Update user cv",
+  args: {
+    cv: { type: GraphQLString }, 
+  },
+  async resolve(parent, args, { verifiedUser }) {
+    if (!verifiedUser) {
+      throw new Error("Unauthenticated")
+    }
+    const userUpdated = await User.findOneAndUpdate(
+      { 
+        _id: verifiedUser._id,
+      },
+      { cv: args.cv },
+      {
+        new: true,
+        runValidators: true,
+      }
+    )
+
+    if (!userUpdated) {
+      throw new Error("No comment with the given ID found for the author")
+    }
+
+    return userUpdated
   },
 }
 
@@ -237,5 +297,7 @@ module.exports = {
   deletePost,
   updateComment,
   deleteComment,
-  myInfo
+  myInfo,
+  updateProfileCV,
+  updateCondidature
 }
